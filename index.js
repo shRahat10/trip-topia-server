@@ -29,6 +29,13 @@ async function run() {
 
         //========================
         const spotCollection = client.db('trip-topia').collection('tourists-spots');
+        const countryCollection = client.db('trip-topia').collection('countries');
+
+        app.get('/countries', async (req, res) => {
+            const cursor = countryCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
 
         app.get('/tourists-spots', async (req, res) => {
             const cursor = spotCollection.find();
