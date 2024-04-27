@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
+const {ObjectId} = require('mongodb')
 
 
 // middleware
@@ -71,6 +72,13 @@ async function run() {
             }
       
             const result = await spotCollection.updateOne(filter, spot, options);
+            res.send(result);
+          })
+
+          app.delete('/tourists-spots/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await spotCollection.deleteOne(query);
             res.send(result);
           })
 
